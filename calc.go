@@ -37,7 +37,8 @@ func (c *Calculator) ShortOutput() string {
 const divByZeroErr = "Error: div by 0"
 
 func (c *Calculator) Input(r rune) {
-	if !strings.ContainsRune("0123456789.+-*/=CN", r) {
+	const validInputs = "0123456789.+-*/=CN"
+	if !strings.ContainsRune(validInputs, r) {
 		return
 	}
 
