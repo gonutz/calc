@@ -152,7 +152,6 @@ func TestNumbersCanBeNegated(t *testing.T) {
 	inout("N", "", "-1")
 	inout("N", "", "1")
 	inout("N", "", "-1")
-
 }
 
 func TestNegatingZeroDoesNothing(t *testing.T) {
@@ -162,4 +161,16 @@ func TestNegatingZeroDoesNothing(t *testing.T) {
 
 func TestOperatorsCannotBeBegated(t *testing.T) {
 	makeCalcTest(t)("1+N", "1", "+")
+}
+
+func TestLastResultCanBeNegated(t *testing.T) {
+	inout := makeCalcTest(t)
+	inout("1+2=", "1+2=", "3")
+	inout("N", "", "-3")
+	inout("+4=", "-3+4=", "1")
+
+	inout("C", "", "0")
+	inout("1-2=", "1-2=", "-1")
+	inout("N", "", "1")
+	inout("+4=", "1+4=", "5")
 }

@@ -55,13 +55,14 @@ func (c *Calculator) Input(r rune) {
 	}
 
 	if r == 'N' {
-		if c.short == "0" || c.lastWasOp {
-			return
-		}
-		if strings.HasPrefix(c.short, "-") {
-			c.short = strings.TrimPrefix(c.short, "-")
+		if strings.HasSuffix(c.long, "=") {
+			c.long = ""
+			c.short = negate(c.short)
+			c.lastWasOp = false
 		} else {
-			c.short = "-" + c.short
+			if !(c.short == "0" || c.lastWasOp) {
+				c.short = negate(c.short)
+			}
 		}
 		return
 	}
@@ -123,6 +124,14 @@ func (c *Calculator) Input(r rune) {
 
 func isOp(r rune) bool {
 	return r == '+' || r == '-' || r == '*' || r == '/' || r == '='
+}
+
+func negate(s string) string {
+	if strings.HasPrefix(s, "-") {
+		return s[1:]
+	} else {
+		return "-" + s
+	}
 }
 
 func (c *Calculator) solve() {
