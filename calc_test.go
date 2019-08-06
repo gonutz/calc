@@ -156,7 +156,7 @@ func TestNumbersCanBeNegated(t *testing.T) {
 
 func TestNegatingZeroDoesNothing(t *testing.T) {
 	makeCalcTest(t)("N", "", "0")
-
+	makeCalcTest(t)("1-1=N", "", "0")
 }
 
 func TestOperatorsCannotBeBegated(t *testing.T) {

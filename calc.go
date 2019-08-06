@@ -57,13 +57,12 @@ func (c *Calculator) Input(r rune) {
 
 	if r == 'N' {
 		if strings.HasSuffix(c.long, "=") {
+			// at the end of a calculation, reset the previous equation
 			c.long = ""
-			c.short = negate(c.short)
 			c.lastWasOp = false
-		} else {
-			if !(c.short == "0" || c.lastWasOp) {
-				c.short = negate(c.short)
-			}
+		}
+		if !(c.short == "0" || c.lastWasOp) {
+			c.short = negate(c.short)
 		}
 		return
 	}
