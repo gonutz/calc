@@ -37,6 +37,10 @@ func (c *Calculator) ShortOutput() string {
 const divByZeroErr = "Error: div by 0"
 
 func (c *Calculator) Input(r rune) {
+	if !strings.ContainsRune("0123456789.+-*/=CN", r) {
+		return
+	}
+
 	if c.short == divByZeroErr {
 		c.reset()
 	}
@@ -47,6 +51,18 @@ func (c *Calculator) Input(r rune) {
 	}
 
 	if (r == '+' || r == '*' || r == '/') && c.short == "0" && c.long == "" {
+		return
+	}
+
+	if r == 'N' {
+		if c.short == "0" || c.lastWasOp {
+			return
+		}
+		if strings.HasPrefix(c.short, "-") {
+			c.short = strings.TrimPrefix(c.short, "-")
+		} else {
+			c.short = "-" + c.short
+		}
 		return
 	}
 

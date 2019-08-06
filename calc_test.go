@@ -141,3 +141,25 @@ func TestNumbersStartingWithDecimalArePrependedWithZero(t *testing.T) {
 	inout("=", "0.5=", "0.5")
 	inout("+.1-.2=", "0.5+0.1-0.2=", "0.4")
 }
+
+func TestInvalidInputIsIgnored(t *testing.T) {
+	makeCalcTest(t)("abc", "", "0")
+}
+
+func TestNumbersCanBeNegated(t *testing.T) {
+	inout := makeCalcTest(t)
+	inout("1", "", "1")
+	inout("N", "", "-1")
+	inout("N", "", "1")
+	inout("N", "", "-1")
+
+}
+
+func TestNegatingZeroDoesNothing(t *testing.T) {
+	makeCalcTest(t)("N", "", "0")
+
+}
+
+func TestOperatorsCannotBeBegated(t *testing.T) {
+	makeCalcTest(t)("1+N", "1", "+")
+}

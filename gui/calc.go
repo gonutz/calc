@@ -74,6 +74,7 @@ func main() {
 
 	button("=", 2, 0, w32.VK_RETURN)
 	button("C", 0, 4, w32.VK_ESCAPE, 'C')
+	button("N", 1, 4, 'N').SetText("+/-")
 
 	window.Show()
 }
