@@ -6,12 +6,18 @@ import (
 	"strings"
 )
 
+// Calculator accepts user input and holds the state of the calculation.
+// Use Input to update the equation, input "=" to have the result calculated.
+// This will solve the whole equation, multiplication and division before
+// addition and subtraction.
 type Calculator struct {
 	short, long string
 	lastWasOp   bool
 	nums, ops   []string
 }
 
+// NewCalculator returns a fresh Calculator. Its inital state is a "0" as the
+// short output, and "" as the long output.
 func NewCalculator() *Calculator {
 	var c Calculator
 	c.reset()
@@ -26,16 +32,30 @@ func (c *Calculator) reset() {
 	c.ops = nil
 }
 
+// LongOutput returns the equation entered so far. It does not contain the
+// number/operator that is currently being edited, that is contained in the
+// ShortOutput().
 func (c *Calculator) LongOutput() string {
 	return c.long
 }
 
+// ShortOutput returns the number or operator that is currently being edited.
+// The previous equation inputs can be retrieved with LongOutput().
 func (c *Calculator) ShortOutput() string {
 	return c.short
 }
 
 const divByZeroErr = "Error: div by 0"
 
+// Input accepts the following characters:
+//
+// "0123456789." to edit the current number
+// "+-*/"        for basic math operations
+// "="           to display the result of the current equation
+// "C"           to clear the current calculation
+// "N"           to negate the current number
+//
+// After each input the short and long outputs are update.
 func (c *Calculator) Input(r rune) {
 	const validInputs = "0123456789.+-*/=CN"
 	if !strings.ContainsRune(validInputs, r) {
