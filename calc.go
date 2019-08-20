@@ -55,7 +55,7 @@ const divByZeroErr = "Error: div by 0"
 // "C"           to clear the current calculation
 // "N"           to negate the current number
 //
-// After each input the short and long outputs are update.
+// After each input the short and long outputs are updated.
 func (c *Calculator) Input(r rune) {
 	const validInputs = "0123456789.+-*/=CN"
 	if !strings.ContainsRune(validInputs, r) {
