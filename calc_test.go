@@ -101,9 +101,6 @@ func TestPlusMinusMultiplyDivideAllWork(t *testing.T) {
 	inout("3/4=", "3/4=", "0.75")
 }
 
-func Test(t *testing.T) {
-}
-
 func TestAfterDivErrorNewCalculationStarts(t *testing.T) {
 	makeCalcTest(t)("1/0=5+6=", "5+6=", "11")
 	makeCalcTest(t)("1/0=-5=", "-5=", "-5")
