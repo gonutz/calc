@@ -123,7 +123,7 @@ func TestLastResultIsUsedForNextCalculation(t *testing.T) {
 	inout("+3=", "6+3=", "9")
 }
 
-func TestSingleCommaAfterNumberIsRemoved(t *testing.T) {
+func TestSingleDecimalPointAfterNumberIsRemoved(t *testing.T) {
 	makeCalcTest(t)("1.+2=", "1+2=", "3")
 }
 
