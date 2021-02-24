@@ -1,8 +1,9 @@
 package calc_test
 
 import (
-	"github.com/gonutz/calc"
 	"testing"
+
+	"github.com/gonutz/calc"
 )
 
 func makeCalcTest(t *testing.T) func(input, longOutput, shortOutput string) {
