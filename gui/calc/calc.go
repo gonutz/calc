@@ -2,8 +2,7 @@ package main
 
 import (
 	"github.com/gonutz/calc"
-	"github.com/gonutz/w32"
-	"github.com/gonutz/wui"
+	"github.com/gonutz/wui/v2"
 )
 
 func main() {
@@ -11,18 +10,18 @@ func main() {
 
 	window := wui.NewWindow()
 	window.SetTitle("Calc")
-	window.SetClientSize(300, 500)
+	window.SetInnerSize(300, 500)
 	window.SetFont(tahoma)
 
 	c := calc.NewCalculator()
 
 	long := wui.NewLabel()
-	long.SetRightAlign()
+	long.SetAlignment(wui.AlignRight)
 	long.SetBounds(10, 30, 280, 20)
 	window.Add(long)
 
 	short := wui.NewLabel()
-	short.SetRightAlign()
+	short.SetAlignment(wui.AlignRight)
 	short.SetBounds(10, 50, 280, 20)
 	window.Add(short)
 
@@ -33,11 +32,11 @@ func main() {
 
 	show()
 
-	button := func(text string, x, y int, keys ...interface{}) *wui.Button {
-		tileSize := window.ClientWidth() / 4
+	button := func(text string, x, y int, keys ...wui.Key) *wui.Button {
+		tileSize := window.InnerWidth() / 4
 		b := wui.NewButton()
 		b.SetText(text)
-		b.SetBounds(x*tileSize, window.ClientHeight()-(y+1)*tileSize, tileSize, tileSize)
+		b.SetBounds(x*tileSize, window.InnerHeight()-(y+1)*tileSize, tileSize, tileSize)
 		b.SetOnClick(func() {
 			for _, r := range text {
 				c.Input(r)
@@ -46,34 +45,30 @@ func main() {
 		})
 		window.Add(b)
 		for _, key := range keys {
-			if vk, ok := key.(int); ok {
-				window.SetShortcut(wui.ShortcutKeys{Key: uint16(vk)}, b.OnClick())
-			} else if r, ok := key.(int32); ok {
-				window.SetShortcut(wui.ShortcutKeys{Rune: r}, b.OnClick())
-			}
+			window.SetShortcut(b.OnClick(), key)
 		}
 		return b
 	}
 
-	button("0", 1, 0, '0', w32.VK_NUMPAD0)
-	button("1", 0, 1, '1', w32.VK_NUMPAD1)
-	button("2", 1, 1, '2', w32.VK_NUMPAD2)
-	button("3", 2, 1, '3', w32.VK_NUMPAD3)
-	button("4", 0, 2, '4', w32.VK_NUMPAD4)
-	button("5", 1, 2, '5', w32.VK_NUMPAD5)
-	button("6", 2, 2, '6', w32.VK_NUMPAD6)
-	button("7", 0, 3, '7', w32.VK_NUMPAD7)
-	button("8", 1, 3, '8', w32.VK_NUMPAD8)
-	button("9", 2, 3, '9', w32.VK_NUMPAD9)
-	button(".", 0, 0, ',', '.', w32.VK_OEM_PERIOD, w32.VK_DECIMAL)
+	button("0", 1, 0, '0', wui.KeyNum0)
+	button("1", 0, 1, '1', wui.KeyNum1)
+	button("2", 1, 1, '2', wui.KeyNum2)
+	button("3", 2, 1, '3', wui.KeyNum3)
+	button("4", 0, 2, '4', wui.KeyNum4)
+	button("5", 1, 2, '5', wui.KeyNum5)
+	button("6", 2, 2, '6', wui.KeyNum6)
+	button("7", 0, 3, '7', wui.KeyNum7)
+	button("8", 1, 3, '8', wui.KeyNum8)
+	button("9", 2, 3, '9', wui.KeyNum9)
+	button(".", 0, 0, ',', '.', wui.KeyOEMPeriod, wui.KeyDecimal)
 
-	button("+", 3, 3, '+', w32.VK_ADD, w32.VK_OEM_PLUS)
-	button("-", 3, 2, '-', w32.VK_SUBTRACT, w32.VK_OEM_MINUS)
-	button("*", 3, 1, '*', w32.VK_MULTIPLY)
-	button("/", 3, 0, '/', w32.VK_DIVIDE)
+	button("+", 3, 3, '+', wui.KeyAdd, wui.KeyOEMPlus)
+	button("-", 3, 2, '-', wui.KeySubtract, wui.KeyOEMMinus)
+	button("*", 3, 1, '*', wui.KeyMultiply)
+	button("/", 3, 0, '/', wui.KeyDivide)
 
-	button("=", 2, 0, w32.VK_RETURN)
-	button("C", 0, 4, w32.VK_ESCAPE, 'C')
+	button("=", 2, 0, wui.KeyReturn)
+	button("C", 0, 4, wui.KeyEscape, 'C')
 	button("N", 1, 4, 'N').SetText("+/-")
 
 	window.Show()
