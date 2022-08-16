@@ -92,6 +92,11 @@ func (c *Calculator) Input(r rune) {
 		return
 	}
 
+	if c.short == "-" && r == '-' {
+		c.short = "0"
+		return
+	}
+
 	if strings.HasSuffix(c.long, "=") {
 		// if after a calculation we continue
 		// - with an operator, we use the last calculation result as the first

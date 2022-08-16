@@ -114,6 +114,14 @@ func TestOperatorsAtStartAreIgnoredExceptForMinus(t *testing.T) {
 	inout("+", "", "0")
 }
 
+func TestMultipleMinusAtStartTogglesBetweenMinusAndZero(t *testing.T) {
+	inout := makeCalcTest(t)
+	inout("-", "", "-")
+	inout("-", "", "0")
+	inout("-", "", "-")
+	inout("-", "", "0")
+}
+
 func TestClearingWillResetCalculator(t *testing.T) {
 	makeCalcTest(t)("1+C", "", "0")
 }
